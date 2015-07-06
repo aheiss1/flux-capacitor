@@ -1,7 +1,7 @@
 # flux-capacitor
 Without using any costly database, this solution complements [Amazon Kinesis](http://aws.amazon.com/kinesis/) with the following capabilities:
 * Long-term archival of records.
-* Making current streams and their archives accessible to SQL-based exploration and analysis.
+* Making both current and archived records accessible to SQL-based exploration and analysis.
 * Replay of archived records:
   * which supports key-value compaction so only the last record for a key is replayed.
   * which supports bounded replay (one needn’t replay the full archive).
