@@ -14,7 +14,7 @@ Without using any costly database, this solution complements [Amazon Kinesis](ht
 * This will probably be more of an ephemeral tool than a service, but the archival portion will have to run at least daily in order to not miss any records.
 * The initial implementation might only support JSON records, but further contributions should be able to remove that as a requirement.
 * The initial implementation might only support a single Kinesis stream, but further contributions should be able to remove that as a requirement.
-* Data security is left to the user.
+* Data and cluster security is left to the user.
 
 ## Technical Goals
 * Configure and launch a process (TBD, there are many options) to archive blocks of Amazon Kinesis records to [Amazon S3](http://aws.amazon.com/s3/) before they expire, possibly via [Amazon EMRFS](http://docs.aws.amazon.com/ElasticMapReduce/latest/DeveloperGuide/emr-fs.html).
