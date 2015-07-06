@@ -10,7 +10,7 @@ Without using any costly database, this solution complements [Amazon Kinesis](ht
   * which, with consumer cooperation, provides some definition of eventual consistency with respect to records that arrive on a stream concurrently with a replay operation, without requiring this solution to mediate the flow of the stream.
 
 ## Assumptions and Applicability Constraints
-* This is mostly an integration project, light on actual software.
+* This is mostly an integration project, light on actual software. The [AWS CLI](http://aws.amazon.com/cli/) will be used, and is assumed to be installed and configured.
 * This will probably be more of an ephemeral tool than a service, but the archival portion will have to run at least daily in order to not miss any records.
 * The initial implementation might only support JSON records, but further contributions should be able to remove that as a requirement.
 * The initial implementation might only support a single Kinesis stream, but further contributions should be able to remove that as a requirement.
