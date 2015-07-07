@@ -1,0 +1,10 @@
+#!/bin/sh -x
+
+CONFIGFILE=$1
+if [ -z "${CONFIGFILE}" ]; then
+    echo "Usage: $0 <configFile>"
+    exit 1
+fi
+. ${CONFIGFILE}
+
+aws --profile ${AWS_PROFILE} emr help

@@ -1,0 +1,37 @@
+#!/bin/sh
+
+# Copyright (C) 2015 Commerce Technologies, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+for f in /home/hadoop/hive/lib/emr-*.jar; do
+  cp -af $f /home/hadoop/drill/jars/3rdparty/
+done
+
+for f in /usr/share/aws/emr/lib/emr-core-*.jar; do
+  cp -af $f /home/hadoop/drill/jars/3rdparty/
+done
+
+for f in /home/hadoop/share/hadoop/common/lib/emr-*.jar; do
+  cp -af $f /home/hadoop/drill/jars/3rdparty/
+done
+
+#TODO be more selective with aws-java-sdk;
+#maybe leverage https://github.com/awslabs/emr-bootstrap-actions/blob/master/gradle/install-gradle-bootstrap.sh
+for pattern in aws-java-sdk gson; do
+  for f in /home/hadoop/share/hadoop/common/lib/${pattern}-*.jar; do
+    cp -af $f /home/hadoop/drill/jars/3rdparty/
+  done
+done
+
+sudo /etc/init.d/service-nanny restart

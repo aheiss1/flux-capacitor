@@ -26,3 +26,10 @@ Without using any costly database, this solution complements [Amazon Kinesis](ht
 * Configure Apache Drill to read from Amazon Kinesis via Amazon EMR Hive.
 * To the greatest extent possible without storing another copy of the data, provide a unified and de-duplicated view spanning current and archived Amazon Kinesis records.
 * (TBD) Provide a basic UI or API to initiate search and replay operations, and monitor progress.
+
+# Getting Started
+* Install the [AWS CLI](http://aws.amazon.com/cli/) and configure it with your credentials and default region
+* Clone the **flux-capacitor** Git repository locally
+* Create a config file by copying **conf/example-flux-capacitor.conf** and editing it
+* Run **./upload-flux-capacitor-resources <config file>**
+* Run **./launch-flux-capacitor <config file>**

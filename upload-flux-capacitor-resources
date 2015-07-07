@@ -1,0 +1,11 @@
+#!/bin/sh -x
+
+CONFIGFILE=$1
+if [ -z "${CONFIGFILE}" ]; then
+    echo "Usage: $0 <configFile>"
+    exit 1
+fi
+. ${CONFIGFILE}
+
+aws --profile ${AWS_PROFILE} s3 mb s3://${FLUXCAP_S3_BUCKET}
+aws --profile ${AWS_PROFILE} s3 sync ${FLUXCAP_SRC}/resources/s3/ s3://${FLUXCAP_S3_BUCKET}${FLUXCAP_S3_PATH}
