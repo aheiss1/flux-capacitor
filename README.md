@@ -29,7 +29,6 @@ Without using any costly database, this solution complements [Amazon Kinesis](ht
 
 # Getting Started
 * Install the [AWS CLI](http://aws.amazon.com/cli/) and configure it with your credentials and default region
-* Clone the **flux-capacitor** Git repository locally
 * Create a config file by copying **conf/example-flux-capacitor.conf** and editing it
 * Run **./upload-flux-capacitor-resources <config file>**
 * Run **./launch-flux-capacitor <config file>**
