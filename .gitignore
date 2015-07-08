@@ -1,2 +1,2 @@
 conf/*.conf
-!conf/flux-capacitor-example.conf
+!conf/flux-capacitor-defaults.conf

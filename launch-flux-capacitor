@@ -1,5 +1,6 @@
-#!/bin/sh -x
+#!/bin/bash +O sourcepath
 
+FLUXCAP_HOME=${PWD}
 CONFIGFILE=$1
 if [ -z "${CONFIGFILE}" ]; then
     echo "Usage: $0 <configFile>"
@@ -7,4 +8,15 @@ if [ -z "${CONFIGFILE}" ]; then
 fi
 . ${CONFIGFILE}
 
-aws --profile ${AWS_PROFILE} emr help
+EMR_EC2_ATTRIBUTES="InstanceProfile=${EMR_EC2_ROLE}"
+if [ -n "${EMR_EXTRA_EC2_ATTRIBUTES}" ]; then
+    EMR_EC2_ATTRIBUTES="${EMR_EC2_ATTRIBUTES},${EMR_EXTRA_EC2_ATTRIBUTES}"
+fi
+
+aws --profile "${AWS_PROFILE}" emr create-cluster \
+ --ami-version "${EMR_AMI_VERSION}" \
+ --instance-groups ${EMR_INSTANCE_GROUPS} \
+ --name "${EMR_CLUSTER_NAME}" \
+ --service-role "${EMR_SERVICE_ROLE}" \
+ --ec2-attributes "${EMR_EC2_ATTRIBUTES}" \
+ ${EMR_EXTRA_CLUSTER_OPTIONS}

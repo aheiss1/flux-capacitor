@@ -1,4 +1,4 @@
-#!/bin/sh -x
+#!/bin/bash +O sourcepath
 
 CONFIGFILE=$1
 if [ -z "${CONFIGFILE}" ]; then

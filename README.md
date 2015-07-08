@@ -27,8 +27,14 @@ Without using any costly database, this solution complements [Amazon Kinesis](ht
 * To the greatest extent possible without storing another copy of the data, provide a unified and de-duplicated view spanning current and archived Amazon Kinesis records.
 * (TBD) Provide a basic UI or API to initiate search and replay operations, and monitor progress.
 
+# Prerequisites
+* Bash shell installed at **/bin/bash**
+* [AWS CLI](http://aws.amazon.com/cli/) installed and configured with your credentials and default region (you can run **aws configure** to do so interactively)
+
 # Getting Started
-* Install the [AWS CLI](http://aws.amazon.com/cli/) and configure it with your credentials and default region
-* Create a config file by copying **conf/example-flux-capacitor.conf** and editing it
+* Create a config file. Either:
+ * Make a copy of **conf/flux-capacitor-defaults.conf** and edit the copy, or
+ * Create a new file that will contain only overrides, and import the defaults
+by following the directions at the top of **conf/flux-capacitor-defaults.conf**
 * Run **./upload-flux-capacitor-resources <config file>**
 * Run **./launch-flux-capacitor <config file>**
