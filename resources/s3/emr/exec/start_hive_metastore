@@ -14,6 +14,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+IS_MASTER=true
+if [ -f /mnt/var/lib/info/instance.json ]; then
+  IS_MASTER=`cat /mnt/var/lib/info/instance.json | tr -d '\n ' | sed -n 's|.*\"isMaster\":\([^,]*\).*|\1|p'`
+fi
+[ "$IS_MASTER" = "false" ] && exit 0
+
+
 #TODO turn this into a service-nanny defn
 #https://tnachen.wordpress.com/2013/12/24/drill-on-aws-emr/
 nohup /home/hadoop/hive/bin/hive --service metastore > /mnt/var/log/hadoop/hive-metastore.out 2> /mnt/var/log/hadoop/hive-metastore.log &

@@ -17,6 +17,13 @@
 #Note: Drill likes to have one or more folders beneath each workspace
 #location to use as table names.
 
+IS_MASTER=true
+if [ -f /mnt/var/lib/info/instance.json ]; then
+  IS_MASTER=`cat /mnt/var/lib/info/instance.json | tr -d '\n ' | sed -n 's|.*\"isMaster\":\([^,]*\).*|\1|p'`
+fi
+[ "$IS_MASTER" = "false" ] && exit 0
+
+
 ARCHIVES_DFS_URL="$1"
 ARCHIVES_PATH="$2"
 

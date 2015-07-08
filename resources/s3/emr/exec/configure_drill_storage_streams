@@ -14,9 +14,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Run this on the node which is also running the Hive Metastore (likely the cluster master).
-# This only connects to Hive; you must configure Hive tables for streams.
+
+# This only connects to Hive; you must also configure Hive tables for streams.
 # (http://docs.aws.amazon.com/ElasticMapReduce/latest/DeveloperGuide/query-kinesis-generate-data.html)
+
+IS_MASTER=true
+if [ -f /mnt/var/lib/info/instance.json ]; then
+  IS_MASTER=`cat /mnt/var/lib/info/instance.json | tr -d '\n ' | sed -n 's|.*\"isMaster\":\([^,]*\).*|\1|p'`
+fi
+[ "$IS_MASTER" = "false" ] && exit 0
+
 
 HIVE_METASTORE_ADDR=${HOSTNAME}
 
