@@ -1,5 +1,6 @@
 #!/bin/bash +O sourcepath
 
+FLUXCAP_HOME=${PWD}
 CONFIGFILE=$1
 if [ -z "${CONFIGFILE}" ]; then
     echo "Usage: $0 <configFile>"
@@ -7,5 +8,5 @@ if [ -z "${CONFIGFILE}" ]; then
 fi
 . ${CONFIGFILE}
 
-aws --profile ${AWS_PROFILE} s3 mb s3://${FLUXCAP_S3_BUCKET}
-aws --profile ${AWS_PROFILE} s3 sync ${FLUXCAP_SRC}/resources/s3/ s3://${FLUXCAP_S3_BUCKET}${FLUXCAP_S3_PATH}
+aws --profile ${AWS_PROFILE} s3 mb ${FLUXCAP_S3_URL}
+aws --profile ${AWS_PROFILE} s3 sync ${FLUXCAP_HOME}/resources/s3/ ${FLUXCAP_S3_URL}
