@@ -15,9 +15,9 @@
 # limitations under the License.
 
 
-# Assists with establishing an SSH session to an EMR cluster master.
-
 printUsage() {
+	echo "Assists with establishing an SSH session to an EMR cluster master."
+	echo ""
 	echo "Usage: $0 <cluster-id> <private-key-file> [<ssh arg>*]"
 	echo ""
 	echo "Please provide first the cluster-id printed by the 'launch-cluster' command."

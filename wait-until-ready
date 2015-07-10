@@ -18,6 +18,8 @@
 # Waits for a cluster to be ready for use.
 
 printUsage() {
+	echo "Waits for a cluster to be ready to use."
+	echo ""
 	echo "Usage: $0 <cluster-id>"
 	echo ""
 	echo "Please provide the cluster-id printed by the 'launch-cluster' command."
@@ -31,5 +33,5 @@ if [ -z "${CLUSTER_ID}" ]; then
 	exit 1
 fi
 
-echo "Waiting... This can take 10 minutes or more."
+echo "Waiting... This can take 10 minutes or more if the cluster was launched recently."
 time aws --profile ${AWS_PROFILE:-"default"} emr wait cluster-running --cluster-id ${CLUSTER_ID}

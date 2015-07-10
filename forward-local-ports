@@ -20,6 +20,8 @@
 # and http://docs.aws.amazon.com/ElasticMapReduce/latest/DeveloperGuide/emr-connect-master-no$
 
 printUsage() {
+	echo "Forwards local ports to a cluster master over an SSH tunnel."
+	echo ""
 	echo "Usage: $0 <cluster-id> <private-key-file> [<ssh arg>*]"
 	echo ""
 	echo "Please provide first the cluster-id printed by the 'launch-cluster' command."

@@ -18,6 +18,8 @@
 LAUNCHER_HOME=${PWD}
 CONFIGFILE=$1
 if [ -z "${CONFIGFILE}" ]; then
+    echo "Uploads resources required for cluster launch into an S3 bucket."
+    echo ""
     echo "Usage: $0 <configFile>"
     exit 1
 fi
