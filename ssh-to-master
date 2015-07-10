@@ -19,7 +19,8 @@
 
 printUsage() {
 	echo "Usage: $0 <cluster-id> <private-key-file> [<ssh arg>*]"
-	echo "Please provide first the cluster-id printed by the 'launch-flux-capacitor' command."
+	echo ""
+	echo "Please provide first the cluster-id printed by the 'launch-cluster' command."
 	echo "Please provide second the local file containing the private key for the SSH key pair used by the EC2 nodes in the cluster."
 	echo "Any additional options will be passed through to the ssh command."
 	echo ""
@@ -32,24 +33,30 @@ SSH_ARGS=$*
 
 if [ -z "${CLUSTER_ID}" ]; then
 	printUsage
+	echo ""
 	echo "If you do not know which key pair was used, running $0 <cluster-id> will print the key pair name."
 	exit 1
 fi
 
-CLUSTER_DESCRIPTION=`aws --profile ${AWS_PROFILE:-"default"} emr describe-cluster --cluster-id ${CLUSTER_ID}`
-EXIT_CODE=$?
-if [ ${EXIT_CODE} -ne 0 ]; then
-	echo "${CLUSTER_DESCRIPTION}"
-	exit ${EXIT_CODE}
-else
-	PUBLIC_ADDR=`echo "${CLUSTER_DESCRIPTION}" | grep MasterPublicDnsName | cut -d '"' -f 4`
-fi
-
 if [ -z "${PRIVATE_KEY_FILE}" ]; then
-	KEY_PAIR_NAME=`echo "${CLUSTER_DESCRIPTION}" | grep Ec2KeyName | cut -d '"' -f 4`
+	KEY_PAIR_NAME=`aws --profile ${AWS_PROFILE:-"default"} emr describe-cluster \
+ --cluster-id ${CLUSTER_ID} --query Cluster.Ec2InstanceAttributes.Ec2KeyName --output text`
+	EXIT_CODE=$?
+	if [ ${EXIT_CODE} -ne 0 ]; then
+		echo "${KEY_PAIR_NAME}"
+		exit ${EXIT_CODE}
+	fi
 	printUsage
 	echo "The name of the key pair used for cluster ${CLUSTER_ID} is: ${KEY_PAIR_NAME}"
 	exit 1
+fi
+
+PUBLIC_ADDR=`aws --profile ${AWS_PROFILE:-"default"} emr describe-cluster \
+ --cluster-id ${CLUSTER_ID} --query Cluster.MasterPublicDnsName --output text`
+EXIT_CODE=$?
+if [ ${EXIT_CODE} -ne 0 ]; then
+	echo "${PUBLIC_ADDR}"
+	exit ${EXIT_CODE}
 fi
 
 if [ ! -f "${PRIVATE_KEY_FILE}" ]; then
@@ -57,4 +64,5 @@ if [ ! -f "${PRIVATE_KEY_FILE}" ]; then
 	exit 2
 fi
 
+echo "Connecting to ${PUBLIC_ADDR}"
 ssh -i "${PRIVATE_KEY_FILE}" ${SSH_ARGS} hadoop@${PUBLIC_ADDR}

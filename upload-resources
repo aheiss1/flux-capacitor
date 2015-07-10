@@ -15,7 +15,7 @@
 # limitations under the License.
 
 
-FLUXCAP_HOME=${PWD}
+LAUNCHER_HOME=${PWD}
 CONFIGFILE=$1
 if [ -z "${CONFIGFILE}" ]; then
     echo "Usage: $0 <configFile>"
@@ -23,5 +23,5 @@ if [ -z "${CONFIGFILE}" ]; then
 fi
 . ${CONFIGFILE}
 
-aws --profile ${AWS_PROFILE} s3 mb ${FLUXCAP_S3_URL}
-aws --profile ${AWS_PROFILE} s3 sync ${FLUXCAP_HOME}/resources/s3/ ${FLUXCAP_S3_URL}
+aws --profile ${AWS_PROFILE} s3 mb ${RESOURCES_S3_URL}
+aws --profile ${AWS_PROFILE} s3 sync ${LAUNCHER_HOME}/resources/s3/ ${RESOURCES_S3_URL}

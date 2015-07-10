@@ -21,7 +21,8 @@
 
 printUsage() {
 	echo "Usage: $0 <cluster-id> <private-key-file> [<ssh arg>*]"
-	echo "Please provide first the cluster-id printed by the 'launch-flux-capacitor' command."
+	echo ""
+	echo "Please provide first the cluster-id printed by the 'launch-cluster' command."
 	echo "Please provide second the local file containing the private key for the SSH key pair used by the EC2 nodes in the cluster."
 	echo "If you do not know which key pair was used, running $0 <cluster-id> will print the key pair name."
 	echo "Any additional options will be passed through to the ssh command."
@@ -29,7 +30,7 @@ printUsage() {
 	echo "To use an AWS CLI profile other than 'default', set the environment variable AWS_PROFILE."
 }
 
-if [ -z "$1" ]; then
+if [ ${#*} -lt 2 ]; then
 	printUsage
 	exit 1
 fi
@@ -43,11 +44,20 @@ ZOOKEEPER_PORT=2181
 DRILL_USER_PORT=31010
 HIVE_PORT=10000
 
+printf "Forwarding local ports to the cluster master:\n"
+printf "%5s %s\n" ${DRILL_UI_PORT} "Drill HTTP"
+printf "%5s %s\n" ${DRILL_USER_PORT} "Drill Protobuf"
+printf "%5s %s\n" ${ZOOKEEPER_PORT} "ZooKeeper"
+printf "%5s %s\n" ${HIVE_PORT} "Hive Thrift"
+printf "%5s %s\n" ${HUE_PORT} "Hue HTTP"
+printf "%5s %s\n" ${RESMGR_PORT} "Resource Manager HTTP"
+printf "%5s %s\n" ${NAMENODE_PORT} "Name Node HTTP"
+
 $(dirname $0)/ssh-to-master $* -N \
  -L${DRILL_UI_PORT}:${PRIVATE_ADDR}:${DRILL_UI_PORT} \
+ -L${DRILL_USER_PORT}:${PRIVATE_ADDR}:${DRILL_USER_PORT} \
+ -L${ZOOKEEPER_PORT}:${PRIVATE_ADDR}:${ZOOKEEPER_PORT} \
+ -L${HIVE_PORT}:${PRIVATE_ADDR}:${HIVE_PORT} \
  -L${HUE_PORT}:${PRIVATE_ADDR}:${HUE_PORT} \
  -L${RESMGR_PORT}:${PRIVATE_ADDR}:${RESMGR_PORT} \
- -L${NAMENODE_PORT}:${PRIVATE_ADDR}:${NAMENODE_PORT} \
- -L${ZOOKEEPER_PORT}:${PRIVATE_ADDR}:${ZOOKEEPER_PORT} \
- -L${DRILL_USER_PORT}:${PRIVATE_ADDR}:${DRILL_USER_PORT} \
- -L${HIVE_PORT}:${PRIVATE_ADDR}:${HIVE_PORT}
+ -L${NAMENODE_PORT}:${PRIVATE_ADDR}:${NAMENODE_PORT}
