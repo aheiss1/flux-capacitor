@@ -1,0 +1,53 @@
+#!/bin/sh
+
+# Copyright (C) 2015 Commerce Technologies, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+
+# Establishes an SSH session with local port forwarding per http://docs.aws.amazon.com/ElasticMapReduce/latest/DeveloperGuide$
+# For alternative access methods, see http://docs.aws.amazon.com/cli/latest/reference/emr/socks.html
+# and http://docs.aws.amazon.com/ElasticMapReduce/latest/DeveloperGuide/emr-connect-master-no$
+
+printUsage() {
+	echo "Usage: $0 <cluster-id> <private-key-file> [<ssh arg>*]"
+	echo "Please provide first the cluster-id printed by the 'launch-flux-capacitor' command."
+	echo "Please provide second the local file containing the private key for the SSH key pair used by the EC2 nodes in the cluster."
+	echo "If you do not know which key pair was used, running $0 <cluster-id> will print the key pair name."
+	echo "Any additional options will be passed through to the ssh command."
+	echo ""
+	echo "To use an AWS CLI profile other than 'default', set the environment variable AWS_PROFILE."
+}
+
+if [ -z "$1" ]; then
+	printUsage
+	exit 1
+fi
+
+PRIVATE_ADDR=127.0.0.1
+DRILL_UI_PORT=8047
+HUE_PORT=8888
+RESMGR_PORT=9026
+NAMENODE_PORT=9101
+ZOOKEEPER_PORT=2181
+DRILL_USER_PORT=31010
+HIVE_PORT=10000
+
+$(dirname $0)/ssh-to-master $* -N \
+ -L${DRILL_UI_PORT}:${PRIVATE_ADDR}:${DRILL_UI_PORT} \
+ -L${HUE_PORT}:${PRIVATE_ADDR}:${HUE_PORT} \
+ -L${RESMGR_PORT}:${PRIVATE_ADDR}:${RESMGR_PORT} \
+ -L${NAMENODE_PORT}:${PRIVATE_ADDR}:${NAMENODE_PORT} \
+ -L${ZOOKEEPER_PORT}:${PRIVATE_ADDR}:${ZOOKEEPER_PORT} \
+ -L${DRILL_USER_PORT}:${PRIVATE_ADDR}:${DRILL_USER_PORT} \
+ -L${HIVE_PORT}:${PRIVATE_ADDR}:${HIVE_PORT}

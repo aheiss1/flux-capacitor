@@ -37,4 +37,7 @@ Without using any costly database, this solution complements [Amazon Kinesis](ht
  * Create a new file that will contain only overrides, and import the defaults
 by following the directions at the top of **conf/flux-capacitor-defaults.conf**
 * Run **./upload-flux-capacitor-resources &lt;config file&gt;**
-* Run **./launch-flux-capacitor &lt;config file&gt;**
+* Run **./launch-flux-capacitor &lt;config file&gt;** and note the ClusterId
+that is printed to stdout; future commands will require it.
+* Run **./wait-until-ready &lt;ClusterId&gt;**
+* Run **./forward-local-ports &lt;ClusterId&gt; &lt;private-key-file&gt;**

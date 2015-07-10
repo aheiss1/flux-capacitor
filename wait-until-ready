@@ -1,4 +1,4 @@
-#!/bin/bash +O sourcepath
+#!/bin/sh
 
 # Copyright (C) 2015 Commerce Technologies, Inc.
 #
@@ -15,13 +15,18 @@
 # limitations under the License.
 
 
-FLUXCAP_HOME=${PWD}
-CONFIGFILE=$1
-if [ -z "${CONFIGFILE}" ]; then
-    echo "Usage: $0 <configFile>"
-    exit 1
-fi
-. ${CONFIGFILE}
+# Waits for a cluster to be ready for use.
 
-aws --profile ${AWS_PROFILE} s3 mb ${FLUXCAP_S3_URL}
-aws --profile ${AWS_PROFILE} s3 sync ${FLUXCAP_HOME}/resources/s3/ ${FLUXCAP_S3_URL}
+printUsage() {
+	echo "Usage: $0 <cluster-id>"
+	echo "Please provide the cluster-id printed by the 'launch-flux-capacitor' command."
+	echo ""
+	echo "To use an AWS CLI profile other than 'default', set the environment variable AWS_PROFILE."
+}
+
+if [ -z "$1" ]; then
+	printUsage
+	exit 1
+fi
+
+aws --profile ${AWS_PROFILE:-"default"} emr wait cluster-running --cluster-id $1
