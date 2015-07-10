@@ -31,4 +31,4 @@ cp -af hadoop-excludes.txt hadoop-excludes.txt.old
 grep -v jets3t < hadoop-excludes.txt.old > hadoop-excludes.txt
 popd
 popd
-sudo /etc/init.d/service-nanny restart
+sudo service drillbit restart

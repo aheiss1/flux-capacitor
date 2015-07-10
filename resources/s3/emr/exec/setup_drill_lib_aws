@@ -34,4 +34,4 @@ for pattern in aws-java-sdk gson; do
   done
 done
 
-sudo /etc/init.d/service-nanny restart
+sudo service drillbit restart
