@@ -42,8 +42,7 @@ cat << EOF > drill-storage-stream_archives.conf
       "workspaces": {
         "default": {
           "location": "${ARCHIVES_PATH:-/}",
-          "writable": false,
-          "defaultInputFormat": "json"
+          "writable": false
         }
       },
       "formats": null
@@ -52,7 +51,10 @@ cat << EOF > drill-storage-stream_archives.conf
 }
 EOF
 
-curl -s -S --retry 7 -X POST -H "Content-Type: application/json" \
- -d @drill-storage-stream_archives.conf --url http://localhost:8047/storage/stream_archives.json
+wget --retry-connrefused --no-verbose --header="Content-Type: application/json" \
+ --post-file=./drill-storage-stream_archives.conf \
+ http://localhost:8047/storage/stream_archives.json
+EXIT_CODE=$?
 
 rm -f drill-storage-stream_archives.conf
+exit ${EXIT_CODE}

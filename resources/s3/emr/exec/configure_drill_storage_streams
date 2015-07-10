@@ -41,7 +41,10 @@ cat << EOF > drill-storage-streams.conf
 }
 EOF
 
-curl -s -S --retry 7 -X POST -H "Content-Type: application/json" \
- -d @drill-storage-streams.conf --url http://localhost:8047/storage/streams.json
+wget --retry-connrefused --no-verbose --header="Content-Type: application/json" \
+ --post-file=./drill-storage-streams.conf \
+ http://localhost:8047/storage/streams.json
+EXIT_CODE=$?
 
 rm -f drill-storage-streams.conf
+exit ${EXIT_CODE}
