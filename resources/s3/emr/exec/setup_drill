@@ -15,7 +15,7 @@
 # limitations under the License.
 #
 #
-# Derived from https://github.com/awslabs/emr-bootstrap-actions/blob/e5fa05c013a7113da956b35586d3005e58135f80/drill/setup_drill
+# Derived from https://github.com/awslabs/emr-bootstrap-actions/tree/3bfe15da533e67040565f4b2ea7d09531aaffe7e
 # Original license follows:
 #
 #

@@ -40,4 +40,6 @@ by following the directions at the top of **conf/flux-capacitor-defaults.conf**
 * Run **./launch-flux-capacitor &lt;config file&gt;** and note the ClusterId
 that is printed to stdout; future commands will require it.
 * Run **./wait-until-ready &lt;ClusterId&gt;**
+ * AWS can take 10 minutes or more to launch a cluster.
 * Run **./forward-local-ports &lt;ClusterId&gt; &lt;private-key-file&gt;**
+ * As long as it's working, this process will not exit, nor print any output.
