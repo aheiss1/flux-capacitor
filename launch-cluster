@@ -39,7 +39,6 @@ fi
 EMR_BA_DRILL="Path=${RESOURCES_S3_URL}/emr/exec/setup_drill,Name=setup_drill"
 EMR_BA_DRILL_LIB_JETS3T="Path=${RESOURCES_S3_URL}/emr/exec/setup_drill_lib_jets3t,Name=setup_drill_lib_jets3t"
 EMR_BA_DRILL_LIB_AWS="Path=${RESOURCES_S3_URL}/emr/exec/setup_drill_lib_aws,Name=setup_drill_lib_aws"
-#EMR_BA_HIVE_METASTORE="Path=${RESOURCES_S3_URL}/emr/exec/start_hive_metastore,Name=start_hive_metastore"
 EMR_BA_DRILL_STORAGE_STREAMS="Path=${RESOURCES_S3_URL}/emr/exec/configure_drill_storage_streams,Name=configure_drill_storage_streams"
 EMR_BA_DRILL_STORAGE_STREAM_ARCHIVES="Path=${RESOURCES_S3_URL}/emr/exec/configure_drill_storage_stream_archives,Args=[${STREAM_ARCHIVES_DFS_URL},${STREAM_ARCHIVES_PATH}],Name=configure_drill_storage_stream_archives"
 EMR_BOOTSTRAP_ACTIONS="${EMR_BA_DRILL} ${EMR_BA_DRILL_LIB_JETS3T} ${EMR_BA_DRILL_LIB_AWS} ${EMR_BA_HIVE_METASTORE} ${EMR_BA_DRILL_STORAGE_STREAMS} ${EMR_BA_DRILL_STORAGE_STREAM_ARCHIVES}"
