@@ -34,4 +34,24 @@ for pattern in aws-java-sdk gson; do
   done
 done
 
-sudo service drillbit restart
+
+JETS3T_VERSION=0.9.3
+JETS3T_PKGNAME=jets3t-${JETS3T_VERSION}
+JETS3T_URL=http://bitbucket.org/jmurty/jets3t/downloads/${JETS3T_PKGNAME}.zip
+pushd /tmp
+rm -rf ${JETS3T_PKGNAME}.zip ${JETS3T_PKGNAME}
+echo Downloading Jets3t from ${JETS3T_URL}
+wget ${JETS3T_URL}
+unzip ${JETS3T_PKGNAME}.zip
+cp -fv ${JETS3T_PKGNAME}/jars/${JETS3T_PKGNAME}.jar /home/hadoop/drill/jars/3rdparty
+pushd /home/hadoop/drill/bin
+cp -af hadoop-excludes.txt hadoop-excludes.txt.old
+grep -v jets3t < hadoop-excludes.txt.old > hadoop-excludes.txt
+popd
+popd
+
+
+# The service-nanny will restart it pretty quickly if we stop it. Experienced
+# concurrent starts when invoking restart here, which led to port bind conflict,
+# which led to infinite loop of failed starts.
+sudo service drillbit stop

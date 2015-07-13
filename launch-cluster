@@ -37,11 +37,10 @@ if [ -n "${EMR_EXTRA_EC2_ATTRIBUTES}" ]; then
 fi
 
 EMR_BA_DRILL="Path=${RESOURCES_S3_URL}/emr/exec/setup_drill,Name=setup_drill"
-EMR_BA_DRILL_LIB_JETS3T="Path=${RESOURCES_S3_URL}/emr/exec/setup_drill_lib_jets3t,Name=setup_drill_lib_jets3t"
 EMR_BA_DRILL_LIB_AWS="Path=${RESOURCES_S3_URL}/emr/exec/setup_drill_lib_aws,Name=setup_drill_lib_aws"
 EMR_BA_DRILL_STORAGE_STREAMS="Path=${RESOURCES_S3_URL}/emr/exec/configure_drill_storage_streams,Name=configure_drill_storage_streams"
 EMR_BA_DRILL_STORAGE_STREAM_ARCHIVES="Path=${RESOURCES_S3_URL}/emr/exec/configure_drill_storage_stream_archives,Args=[${STREAM_ARCHIVES_DFS_URL},${STREAM_ARCHIVES_PATH}],Name=configure_drill_storage_stream_archives"
-EMR_BOOTSTRAP_ACTIONS="${EMR_BA_DRILL} ${EMR_BA_DRILL_LIB_JETS3T} ${EMR_BA_DRILL_LIB_AWS} ${EMR_BA_HIVE_METASTORE} ${EMR_BA_DRILL_STORAGE_STREAMS} ${EMR_BA_DRILL_STORAGE_STREAM_ARCHIVES}"
+EMR_BOOTSTRAP_ACTIONS="${EMR_BA_DRILL} ${EMR_BA_DRILL_LIB_AWS} ${EMR_BA_HIVE_METASTORE} ${EMR_BA_DRILL_STORAGE_STREAMS} ${EMR_BA_DRILL_STORAGE_STREAM_ARCHIVES}"
 
 EMR_CONFIG_STEPS="Name=hive_create_table_for_stream,Type=HIVE,Args=[-f,${RESOURCES_S3_URL}/emr/hive/create_table_for_stream,-hiveconf,tablename=${STREAM_HIVE_TABLE_NAME},-hiveconf,streamname=${STREAM_NAME}]"
 
