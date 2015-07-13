@@ -13,6 +13,12 @@ consumer behavior, such as to force overwrite.
 consistency with respect to records that arrive on a stream concurrently with a
 replay operation, without requiring this solution to mediate the flow of the stream.
 
+## Project Status
+* In active development for use at CommerceHub.
+* Capable of using SQL to search a stream archive and a live stream.
+* Stream archival capability to come next.
+* Message replay capability to follow.
+
 ## Assumptions and Applicability Constraints
 * This is mostly an integration project, light on actual software. The
 [AWS CLI](http://aws.amazon.com/cli/) will be used, and is assumed to be
