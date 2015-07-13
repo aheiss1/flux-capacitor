@@ -63,3 +63,5 @@ printed to stdout; future commands will require it.
  * As with any new SSH host, you will have to accept an authenticity warning the
 first time you connect to a cluster.
  * Once it's forwarding, this process will not exit, nor print any output.
+* Run **./terminate-clusters &lt;cluster-id&gt;** when done to avoid recurring charges.
+* For additional advanced operations, explore the **emr** subcommand of the AWS CLI.
