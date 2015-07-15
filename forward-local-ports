@@ -55,7 +55,7 @@ printf "%5s %s\n" ${HUE_PORT} "Hue HTTP"
 printf "%5s %s\n" ${RESMGR_PORT} "Resource Manager HTTP"
 printf "%5s %s\n" ${NAMENODE_PORT} "Name Node HTTP"
 
-$(dirname $0)/ssh-to-master $* -N \
+$(dirname $0)/ssh-to-master "$@" -N \
  -L${DRILL_UI_PORT}:${PRIVATE_ADDR}:${DRILL_UI_PORT} \
  -L${DRILL_USER_PORT}:${PRIVATE_ADDR}:${DRILL_USER_PORT} \
  -L${ZOOKEEPER_PORT}:${PRIVATE_ADDR}:${ZOOKEEPER_PORT} \
